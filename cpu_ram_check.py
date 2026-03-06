@@ -8,5 +8,5 @@ while(True){
     print(f"CPU : {cpu}%")
     print(f"RAM : {ram.percent}% utilisée ({round(ram.used / 1024**3, 1)} Go / {round(ram.total / 1024**3, 1)} Go)")
 
-    time.sleep(30)
+    time.sleep(3)
 }
