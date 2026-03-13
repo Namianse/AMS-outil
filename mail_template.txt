@@ -1,0 +1,7 @@
+LE PC IL VA PETER
+
+{cpu_str}
+{ram_str}
+{disque_str}
+
+Explosion du serveur le {timestamp}
