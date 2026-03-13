@@ -1,3 +1,5 @@
+import urllib.request
+import xml.etree.ElementTree as ET
 import sqlite3
 import datetime
 import json
