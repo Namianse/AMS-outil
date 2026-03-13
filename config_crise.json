@@ -1,0 +1,5 @@
+{
+    "seuil_cpu": 85,
+    "seuil_ram": 85,
+    "seuil_disque": 85
+}
