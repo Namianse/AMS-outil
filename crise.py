@@ -30,7 +30,7 @@ else:
     ])
 
     if crise:
-        print("/!\ Crise détectée")
+        print("/!\\ Crise détectée")
     else:
         print("Aucun problème détectée.")
 
