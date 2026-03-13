@@ -7,8 +7,9 @@ import json
 conn = sqlite3.connect('/home/dieu/AMS-outil/monitoring.db')
 cursor = conn.cursor()
 
-cursor.execute('''CREATE TABLE IF NOT EXISTS metrics 
-              (timestamp TEXT, cpu REAL, ram REAL, disque_pct REAL)''')
+
+cursor.execute('''CREATE TABLE IF NOT EXISTS alertes
+              (titre TEXT, lien TEXT)''')
 conn.commit()
 
 response = urllib.request.urlopen('https://www.cert.ssi.gouv.fr/feed/')
@@ -25,8 +26,8 @@ if cursor.fetchone() is None:
     conn.commit()
     print(f"Nouvelle alerte : {titre}")
 
-cursor.execute('''CREATE TABLE IF NOT EXISTS alertes
-              (titre TEXT, lien TEXT)''')
+cursor.execute('''CREATE TABLE IF NOT EXISTS metrics 
+              (timestamp TEXT, cpu REAL, ram REAL, disque_pct REAL)''')
 conn.commit()
 
 with open('/home/dieu/AMS-outil/cpu_ram.json', 'r') as f:
