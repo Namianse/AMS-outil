@@ -1,5 +1,8 @@
 import sqlite3
 
+conn = sqlite3.connect('monitoring.db')
+cursor = conn.cursor()
+
 def display():
     cursor.execute('SELECT * FROM metrics')
     results = cursor.fetchall()
