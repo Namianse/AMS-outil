@@ -2,17 +2,17 @@ import sqlite3
 import datetime
 import json
 
-conn = sqlite3.connect('monitoring.db')
+conn = sqlite3.connect('/home/dieu/AMS-outil/monitoring.db')
 cursor = conn.cursor()
 
 cursor.execute('''CREATE TABLE IF NOT EXISTS metrics 
               (timestamp TEXT, cpu REAL, ram REAL, disque_pct REAL)''')
 conn.commit()
 
-with open('cpu_ram.json', 'r') as f:
+with open('/home/dieu/AMS-outil/cpu_ram.json', 'r') as f:
     cpu_ram = json.load(f)
 
-with open('disk.json', 'r') as f:
+with open('/home/dieu/AMS-outil/disk.json', 'r') as f:
     disque = json.load(f)
 
 def clean():
