@@ -15,9 +15,13 @@ if result is None:
 else:
     timestamp, cpu, ram, disque_pct = result
 
-    cpu_str    = f"CPU : {cpu}%    {'/!\' if cpu > config['seuil_cpu'] else ''}"
-    ram_str    = f"RAM : {ram}%    {'/!\' if ram > config['seuil_ram'] else ''}"
-    disque_str = f"Disque : {disque_pct}%    {'/!\' if disque_pct > config['seuil_disque'] else ''}"
+    cpu_alerte    = '/!\' if cpu > config['seuil_cpu'] else ''
+    ram_alerte    = '/!\' if ram > config['seuil_ram'] else ''
+    disque_alerte = '/!\' if disque_pct > config['seuil_disque'] else ''
+    
+    cpu_str    = f"CPU : {cpu}% {cpu_alerte}"
+    ram_str    = f"RAM : {ram}% {ram_alerte}"
+    disque_str = f"Disque : {disque_pct}% {disque_alerte}"
 
     crise = any([
         cpu > config['seuil_cpu'],
