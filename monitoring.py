@@ -12,7 +12,7 @@ conn.commit()
 with open('cpu_ram.json', 'r') as f:
     cpu_ram = json.load(f)
 
-with open('disque.json', 'r') as f:
+with open('disk.json', 'r') as f:
     disque = json.load(f)
 
 def clean():
