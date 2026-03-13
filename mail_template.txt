@@ -1,7 +1,7 @@
-LE PC IL VA PETER
+SUJET: COMPUTADOR EXPLODANDO
 
 {cpu_str}
 {ram_str}
 {disque_str}
 
-Explosion du serveur le {timestamp}
+EXPLOCION EL : {timestamp}
