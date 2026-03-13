@@ -5,9 +5,8 @@ import json
 conn = sqlite3.connect('monitoring.db')
 cursor = conn.cursor()
 
-"""cursor.execute('''CREATE TABLE IF NOT EXISTS metrics 
-              (timestamp TEXT, cpu REAL, ram REAL, disque_pct REAL)''')"""
-cursor.execute('DROP TABLE IF EXISTS metrics')
+cursor.execute('''CREATE TABLE IF NOT EXISTS metrics 
+              (timestamp TEXT, cpu REAL, ram REAL, disque_pct REAL)''')
 conn.commit()
 
 with open('cpu_ram.json', 'r') as f:
