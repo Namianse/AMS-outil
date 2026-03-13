@@ -1,7 +1,7 @@
 import sqlite3
 import json
 
-with open('/home/dieu/AMS-outil/config.json', 'r') as f:
+with open('/home/dieu/AMS-outil/config_crise.json', 'r') as f:
     config = json.load(f)
 
 conn = sqlite3.connect('/home/dieu/AMS-outil/monitoring.db')
