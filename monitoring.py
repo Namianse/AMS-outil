@@ -21,11 +21,10 @@ def clean():
     conn.commit()
 
 def insert():
-    cursor.execute('INSERT INTO metrics VALUES (?, ?, ?, ?, ?)', (
+    cursor.execute('INSERT INTO metrics VALUES (?, ?, ?, ?)', (
         cpu_ram['timestamp'],
         cpu_ram['cpu'],
         cpu_ram['ram'],
-        disque['disque_total'],
         disque['disque_pct']
     ))
     conn.commit()
