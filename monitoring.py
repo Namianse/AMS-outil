@@ -31,4 +31,3 @@ def insert():
 
 clean()
 insert()
-print("Données insérées")
