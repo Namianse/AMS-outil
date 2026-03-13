@@ -8,8 +8,8 @@ def display():
     results = cursor.fetchall()
     for row in results:
         print(f"{row[0]} | CPU: {row[1]}% | RAM: {row[2]}% | Disque: {row[3]}%")
-    cursor.execute('SELECT * FROM alertes')
+    cursor.execute('SELECT * FROM alertes ORDER BY rowid DESC LIMIT 1')
     result = cursor.fetchone()
-    print(f"Dernière alerte : {result[0]} | Lien : {result[1]}")
+    print(f"Dernière alerte : {result[0]} | Lien : {result[1]}")
 
 display()
