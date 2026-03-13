@@ -12,16 +12,23 @@ MOT_DE_PASSE = 'Nathan@29092006!'
 def envoyer_mail(cpu_str, ram_str, disque_str, timestamp):
     with open('/home/dieu/AMS-outil/mail_template.txt', 'r') as f:
         template = f.read()
-    contenu = template.format(
+
+    contenu_formate = template.format(
         cpu_str=cpu_str,
         ram_str=ram_str,
         disque_str=disque_str,
         timestamp=timestamp
     )
+
+    lignes  = contenu_formate.split('\n')
+    sujet   = lignes[0].replace('SUJET: ', '')
+    contenu = '\n'.join(lignes[2:])
+
     msg = MIMEText(contenu)
-    msg['Subject'] = 'ALERTE - Situation de crise détectée'
+    msg['Subject'] = sujet
     msg['From']    = EXPEDITEUR
     msg['To']      = DESTINATAIRE
+
     with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as smtp:
         smtp.login(EXPEDITEUR, MOT_DE_PASSE)
         smtp.send_message(msg)
