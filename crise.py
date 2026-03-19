@@ -29,7 +29,7 @@ def envoyer_mail(cpu_str, ram_str, disque_str, timestamp):
     msg['To']      = DESTINATAIRE
 
     with open('/home/dieu/AMS-outil/mdp_mail.txt', 'r') as f:
-        MOT_DE_PASSE = f.read()
+        MOT_DE_PASSE = f.read().strip()
 
     with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as smtp:
         smtp.login(EXPEDITEUR, MOT_DE_PASSE)
