@@ -9,11 +9,8 @@ import os
 # Données machine physique
 USER_PHYSIQUE = 'uapv2501363@pedago.univ-avignon.fr'
 
-cpu_ram_physique = os.popen(f'ssh {USER_PHYSIQUE} "python3 /home/nas-wks01/users/uapv2501363/AMS-outil/cpu_ram_check.py"').read()
-disk_physique    = os.popen(f'ssh {USER_PHYSIQUE} "/home/nas-wks01/users/uapv2501363/AMS-outil/disk_check.sh"').read()
-
-cpu_ram_p = json.loads(cpu_ram_physique)
-disk_p    = json.loads(disk_physique)
+cpu_ram_physique = os.popen(f'ssh {USER_PHYSIQUE} "/home/nas-wks01/users/uapv2501363/AMS-outil/cpu_ram_check.sh"').read()
+data_p = json.loads(cpu_ram_physique)
 
 conn = sqlite3.connect('/home/dieu/AMS-outil/monitoring.db')
 cursor = conn.cursor()
@@ -77,11 +74,11 @@ def insert():
 
     # Insertion données machine physique
     cursor.execute('INSERT INTO metrics VALUES (?, ?, ?, ?, ?)', (
-    cpu_ram_p['timestamp'],
-    cpu_ram_p['cpu'],
-    cpu_ram_p['ram'],
-    disk_p['disque_pct'],
-    'machine_physique'
+        data_p['timestamp'],
+        data_p['cpu'],
+        data_p['ram'],
+        data_p['disque_pct'],
+        'machine_physique'
     ))
     conn.commit()
 
