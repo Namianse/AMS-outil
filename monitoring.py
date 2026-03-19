@@ -3,9 +3,14 @@ import xml.etree.ElementTree as ET
 import sqlite3
 import datetime
 import json
+import socket
 
 conn = sqlite3.connect('/home/dieu/AMS-outil/monitoring.db')
 cursor = conn.cursor()
+
+# On récupère le nom de la machine
+hostname = socket.gethostname()
+print(hostname)
 
 # Création table Alertes si non existante
 cursor.execute('''CREATE TABLE IF NOT EXISTS alertes
@@ -49,11 +54,12 @@ def clean():
 
 # Fonction qui insère les données reçues dans la BDD avec la date
 def insert():
-    cursor.execute('INSERT INTO metrics VALUES (?, ?, ?, ?)', (
+    cursor.execute('INSERT INTO metrics VALUES (?, ?, ?, ?, ?)', (
         cpu_ram['timestamp'],
         cpu_ram['cpu'],
         cpu_ram['ram'],
-        disque['disque_pct']
+        disque['disque_pct'],
+        hostname
     ))
     conn.commit()
 
