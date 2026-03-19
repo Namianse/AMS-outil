@@ -10,7 +10,10 @@ cursor = conn.cursor()
 
 # On récupère le nom de la machine
 hostname = socket.gethostname()
-print(hostname)
+if(hostname == 'servername'):
+  hostname = 'VM'
+else:
+  hostname = 'Machine locale'
 
 # Création table Alertes si non existante
 cursor.execute('''CREATE TABLE IF NOT EXISTS alertes
