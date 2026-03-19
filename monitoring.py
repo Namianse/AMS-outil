@@ -4,6 +4,16 @@ import sqlite3
 import datetime
 import json
 import socket
+import os
+
+# Données machine physique
+USER_PHYSIQUE = 'uapv2501363@pedago.univ-avignon.fr'
+
+cpu_ram_physique = os.popen(f'ssh {USER_PHYSIQUE} "python3 /home/nas-wks01/users/uapv2501363/AMS-outil/cpu_ram_check.py"').read()
+disk_physique    = os.popen(f'ssh {USER_PHYSIQUE} "/home/nas-wks01/users/uapv2501363/AMS-outil/disk_check.sh"').read()
+
+cpu_ram_p = json.loads(cpu_ram_physique)
+disk_p    = json.loads(disk_physique)
 
 conn = sqlite3.connect('/home/dieu/AMS-outil/monitoring.db')
 cursor = conn.cursor()
@@ -12,8 +22,6 @@ cursor = conn.cursor()
 hostname = socket.gethostname()
 if(hostname == 'servername'):
   hostname = 'VM'
-else:
-  hostname = 'Machine locale'
 
 # Création table Alertes si non existante
 cursor.execute('''CREATE TABLE IF NOT EXISTS alertes
@@ -57,12 +65,23 @@ def clean():
 
 # Fonction qui insère les données reçues dans la BDD avec la date
 def insert():
+    # Insertion données VM
     cursor.execute('INSERT INTO metrics VALUES (?, ?, ?, ?, ?)', (
         cpu_ram['timestamp'],
         cpu_ram['cpu'],
         cpu_ram['ram'],
         disque['disque_pct'],
         hostname
+    ))
+    conn.commit()
+
+    # Insertion données machine physique
+    cursor.execute('INSERT INTO metrics VALUES (?, ?, ?, ?, ?)', (
+    cpu_ram_p['timestamp'],
+    cpu_ram_p['cpu'],
+    cpu_ram_p['ram'],
+    disk_p['disque_pct'],
+    'machine_physique'
     ))
     conn.commit()
 
