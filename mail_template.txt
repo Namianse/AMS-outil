@@ -1,7 +1,7 @@
-SUJET: COMPUTADOR EXPLODANDO
+SUJET: ALERTE CRISE
 
 {cpu_str}
 {ram_str}
 {disque_str}
 
-EXPLOCION EL : {timestamp}
+Crise détectée le : {timestamp}
