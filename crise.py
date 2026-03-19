@@ -7,7 +7,6 @@ SMTP_SERVER  = 'partage.univ-avignon.fr'
 SMTP_PORT    = 465
 EXPEDITEUR   = 'nathan.serra@alumni.univ-avignon.fr'
 DESTINATAIRE = 'nathan.serra@alumni.univ-avignon.fr'
-MOT_DE_PASSE = 'Nathan@29092006!'
 
 def envoyer_mail(cpu_str, ram_str, disque_str, timestamp):
     with open('/home/dieu/AMS-outil/mail_template.txt', 'r') as f:
@@ -22,6 +21,7 @@ def envoyer_mail(cpu_str, ram_str, disque_str, timestamp):
 
     lignes  = contenu_formate.split('\n')
     sujet   = lignes[0].replace('SUJET: ', '')
+    MOT_DE_PASSE = lignes[1].replace('MOT DE PASSE: ', '')
     contenu = '\n'.join(lignes[2:])
 
     msg = MIMEText(contenu)
