@@ -21,13 +21,15 @@ def envoyer_mail(cpu_str, ram_str, disque_str, timestamp):
 
     lignes  = contenu_formate.split('\n')
     sujet   = lignes[0].replace('SUJET: ', '')
-    MOT_DE_PASSE = lignes[1].replace('MOT DE PASSE: ', '')
     contenu = '\n'.join(lignes[2:])
 
     msg = MIMEText(contenu)
     msg['Subject'] = sujet
     msg['From']    = EXPEDITEUR
     msg['To']      = DESTINATAIRE
+
+    with open('/home/dieu/AMS-outil/mdp_mail.txt', 'r') as f:
+        MOT_DE_PASSE = f.read()
 
     with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as smtp:
         smtp.login(EXPEDITEUR, MOT_DE_PASSE)
