@@ -21,20 +21,17 @@ def generer_graphiques(cursor):
     ram_vals   = [r[2] for r in rows]
     disk_vals  = [r[3] for r in rows]
 
-    fichiers = []
-    for titre, valeurs, fichier in [
-        ('CPU (%)',    cpu_vals,  '/home/dieu/AMS-outil/graph_cpu.svg'),
-        ('RAM (%)',    ram_vals,  '/home/dieu/AMS-outil/graph_ram.svg'),
-        ('Disque (%)', disk_vals, '/home/dieu/AMS-outil/graph_disk.svg'),
-    ]:
-        chart = pygal.Line(x_label_rotation=45)
-        chart.title = titre
-        chart.x_labels = timestamps
-        chart.add(titre, valeurs)
-        chart.render_to_file(fichier)
-        fichiers.append(fichier)
+    chart = pygal.Line(x_label_rotation=45)
+    chart.title = 'Monitoring'
+    chart.x_labels = timestamps
+    chart.add('CPU (%)',    cpu_vals)
+    chart.add('RAM (%)',    ram_vals)
+    chart.add('Disque (%)', disk_vals)
 
-    return fichiers
+    fichier = '/home/dieu/AMS-outil/graph_monitoring.svg'
+    chart.render_to_file(fichier)
+
+    return [fichier]
 
 def envoyer_mail(cpu_str, ram_str, disque_str, timestamp, fichiers):
     with open('/home/dieu/AMS-outil/mail_template.txt', 'r') as f:
