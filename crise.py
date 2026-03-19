@@ -1,14 +1,42 @@
 import sqlite3
 import json
 import smtplib
+import pygal
+from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
 
 SMTP_SERVER  = 'partage.univ-avignon.fr'
 SMTP_PORT    = 465
 EXPEDITEUR   = 'nathan.serra@alumni.univ-avignon.fr'
 DESTINATAIRE = 'nathan.serra@alumni.univ-avignon.fr'
 
-def envoyer_mail(cpu_str, ram_str, disque_str, timestamp):
+def generer_graphiques(cursor):
+    cursor.execute('SELECT timestamp, cpu, ram, disque_pct FROM metrics ORDER BY rowid ASC')
+    rows = cursor.fetchall()
+
+    timestamps = [r[0] for r in rows]
+    cpu_vals   = [r[1] for r in rows]
+    ram_vals   = [r[2] for r in rows]
+    disk_vals  = [r[3] for r in rows]
+
+    fichiers = []
+    for titre, valeurs, fichier in [
+        ('CPU (%)',    cpu_vals,  '/home/dieu/AMS-outil/graph_cpu.svg'),
+        ('RAM (%)',    ram_vals,  '/home/dieu/AMS-outil/graph_ram.svg'),
+        ('Disque (%)', disk_vals, '/home/dieu/AMS-outil/graph_disk.svg'),
+    ]:
+        chart = pygal.Line(x_label_rotation=45)
+        chart.title = titre
+        chart.x_labels = timestamps
+        chart.add(titre, valeurs)
+        chart.render_to_file(fichier)
+        fichiers.append(fichier)
+
+    return fichiers
+
+def envoyer_mail(cpu_str, ram_str, disque_str, timestamp, fichiers):
     with open('/home/dieu/AMS-outil/mail_template.txt', 'r') as f:
         template = f.read()
 
@@ -23,10 +51,19 @@ def envoyer_mail(cpu_str, ram_str, disque_str, timestamp):
     sujet   = lignes[0].replace('SUJET: ', '')
     contenu = '\n'.join(lignes[2:])
 
-    msg = MIMEText(contenu)
+    msg = MIMEMultipart()
     msg['Subject'] = sujet
     msg['From']    = EXPEDITEUR
     msg['To']      = DESTINATAIRE
+    msg.attach(MIMEText(contenu))
+
+    for fichier in fichiers:
+        with open(fichier, 'rb') as f:
+            partie = MIMEBase('application', 'octet-stream')
+            partie.set_payload(f.read())
+            encoders.encode_base64(partie)
+            partie.add_header('Content-Disposition', f'attachment; filename="{fichier.split("/")[-1]}"')
+            msg.attach(partie)
 
     with open('/home/dieu/AMS-outil/mdp_mail.txt', 'r') as f:
         MOT_DE_PASSE = f.read().strip()
@@ -66,7 +103,8 @@ else:
 
     if crise:
         print("/!\\ Crise détectée")
-        envoyer_mail(cpu_str, ram_str, disque_str, timestamp)
+        fichiers = generer_graphiques(cursor)
+        envoyer_mail(cpu_str, ram_str, disque_str, timestamp, fichiers)
     else:
         print("Aucun problème détecté.")
 
