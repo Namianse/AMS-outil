@@ -78,7 +78,7 @@ def insert():
         data_p['cpu'],
         data_p['ram'],
         data_p['disque_pct'],
-        'machine_physique'
+        'MP'
     ))
     conn.commit()
 
