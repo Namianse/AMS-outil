@@ -9,8 +9,8 @@ import os
 # Données machine physique
 USER_PHYSIQUE = 'uapv2501363@pedago.univ-avignon.fr'
 
-cpu_ram_physique = os.popen(f'ssh {USER_PHYSIQUE} "/home/nas-wks01/users/uapv2501363/AMS-outil/cpu_ram_disk_check.sh"').read()
-data_p = json.loads(cpu_ram_physique)
+data_physique = os.popen(f'ssh {USER_PHYSIQUE} "/home/nas-wks01/users/uapv2501363/AMS-outil/cpu_ram_disk_check.sh"').read()
+data_p = json.loads(data_physique)
 
 conn = sqlite3.connect('/home/dieu/AMS-outil/monitoring.db')
 cursor = conn.cursor()
