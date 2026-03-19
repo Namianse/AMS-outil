@@ -11,5 +11,7 @@ data = {
     "ram": ram.percent
 }
 
-with open('/home/dieu/AMS-outil/cpu_ram.json', 'w') as f:
+with open('/chemin/cpu_ram.json', 'w') as f:
     json.dump(data, f)
+
+print(json.dumps(data))
