@@ -9,7 +9,7 @@ DB = '/home/dieu/AMS-outil/monitoring.db'
 def get_data(hostname):
     conn = sqlite3.connect(DB)
     cursor = conn.cursor()
-    cursor.execute('SELECT timestamp, cpu, ram, disque_pct FROM metrics WHERE hostname = ? ORDER BY rowid ASC', (hostname,))
+    cursor.execute('SELECT timestamp, cpu, ram, disque_pct FROM metrics WHERE hostname = ? ORDER BY rowid ASC', (hostname))
     rows = cursor.fetchall()
     conn.close()
     return rows
