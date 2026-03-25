@@ -3,7 +3,6 @@ import xml.etree.ElementTree as ET
 import sqlite3
 import datetime
 import json
-import socket
 import os
 
 # Données machine physique
@@ -14,11 +13,6 @@ data_p = json.loads(data_physique)
 
 conn = sqlite3.connect('/home/dieu/AMS-outil/monitoring.db')
 cursor = conn.cursor()
-
-# On récupère le nom de la machine
-hostname = socket.gethostname()
-if(hostname == 'servername'):
-  hostname = 'VM'
 
 # Création table Alertes si non existante
 cursor.execute('''CREATE TABLE IF NOT EXISTS alertes
