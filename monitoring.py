@@ -62,7 +62,7 @@ def insert():
         cpu_ram['cpu'],
         cpu_ram['ram'],
         disque['disque_pct'],
-        VM
+        'VM'
     ))
     conn.commit()
 
