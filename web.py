@@ -18,22 +18,22 @@ def get_data(hostname):
 def generer_graphique(hostname):
     rows = get_data(hostname)
     timestamps = [r[0] for r in rows]
-    cpu_vals   = [r[1] for r in rows]
-    ram_vals   = [r[2] for r in rows]
-    disk_vals  = [r[3] for r in rows]
+    cpu_vals = [r[1] for r in rows]
+    ram_vals = [r[2] for r in rows]
+    disk_vals = [r[3] for r in rows]
 
     chart = pygal.Line(x_label_rotation=45)
     chart.title = f'Monitoring - {hostname}'
     chart.x_labels = timestamps
-    chart.add('CPU (%)',    cpu_vals)
-    chart.add('RAM (%)',    ram_vals)
+    chart.add('CPU (%)', cpu_vals)
+    chart.add('RAM (%)', ram_vals)
     chart.add('Disque (%)', disk_vals)
 
     return chart.render_data_uri()
 
 @app.route('/')
 def index():
-    graph_vm       = generer_graphique('VM')
+    graph_vm = generer_graphique('VM')
     graph_physique = generer_graphique('MP')
     return render_template('index.html', graph_vm=graph_vm, graph_physique=graph_physique)
 
