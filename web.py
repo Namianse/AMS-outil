@@ -21,7 +21,7 @@ def generer_graphique(hostname):
     ram_vals = [r[2] for r in rows]
     disk_vals = [r[3] for r in rows]
 
-    chart = pygal.Line(x_label_rotation=45)
+    chart = pygal.Line(x_label_rotation=45, range = (0, 100))
     chart.title = f'Monitoring - {hostname}'
     chart.x_labels = timestamps
     chart.add('CPU (%)', cpu_vals)
