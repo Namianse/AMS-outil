@@ -1,5 +1,4 @@
-
-from flask import Flask, render_template
+import Flask
 import sqlite3
 import pygal
 
